@@ -2,13 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?=isset($tite)?$tite:'Home';?></title>
 	<link rel="stylesheet" href="<?=base_url('assets/css/bootstrap.min.css');?>">
-	<style type="text/css">
-		.btn-crossed{
-			text-decoration: line-through;
-		}
-	</style>
+	<link rel="stylesheet" href="<?=base_url('assets/css/style.css');?>">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -35,7 +34,11 @@
 	<div class="container">
 		<?=$body;?>
 	</div>
+	<script>
+		var base_url = '<?=base_url();?>';
+	</script>
 	<script src="<?=base_url('assets/js/jquery.min.js');?>"></script>
 	<script src="<?=base_url('assets/js/bootstrap.min.js');?>"></script>
+	<script src="<?=base_url('assets/js/script.js');?>"></script>
 </body>
 </html>

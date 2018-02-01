@@ -57,4 +57,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['start'] = 'home/start';
 $route['playing'] = 'home/playing';
 $route['next'] = 'home/next';
+$route['import'] = 'home/import';
 $route['(:any)/(:any)'] = '404';
