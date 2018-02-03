@@ -1,1 +1,6 @@
 .btn-crossed{text-decoration: line-through;}
+body{font-family: monospace;}
+.answer{margin: 5px;}
+.answers{margin: 30px 0px;}
+img,audio{background-color: #fff;box-shadow: 2px 1px 8px 2px #ddd;}
+*{transition: all 0.3s ease-in;}

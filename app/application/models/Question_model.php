@@ -3,6 +3,7 @@
 class Question_model extends CI_Model {
 	protected $_question = 'questions';
 	protected $_choices = 'choices';
+	protected $_languages = 'languages';
 
 	function get_question()
 	{
@@ -17,8 +18,14 @@ class Question_model extends CI_Model {
 		}
 		$question = $this->db
 		->limit(1,$question_id-1)
+		->order_by('filename')
 		->get($this->_question)->row();
-		$choices = $this->db->where('question_id',$question->question_id)->order_by('text')->get($this->_choices)->result();
+		
+		$choices = $this->db
+		->where('question_id',$question->question_id)
+		->select($this->_choices.'.*,'.$this->_languages.'.language,'.$this->_languages.'.tip')
+		->join($this->_languages, $this->_languages.'.language_id = '.$this->_choices.'.language_id')
+		->order_by($this->_languages.'.language')->get($this->_choices)->result();
 		$question->choices = $choices;
 		return $question;
 	}
@@ -26,7 +33,8 @@ class Question_model extends CI_Model {
 	function is_correct($question_id, $choice)
 	{
 		$ans = $this->db
-		->where(['question_id'=>$question_id,'text'=>$choice])
+		->join($this->_languages, $this->_languages.'.language_id = '.$this->_choices.'.language_id')
+		->where([$this->_choices.'.question_id'=>$question_id,$this->_languages.'.language'=>$choice])
 		->get($this->_choices)->row();
 		return $ans->is_correct;
 	}
