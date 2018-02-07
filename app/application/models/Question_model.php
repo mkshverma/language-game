@@ -39,20 +39,34 @@ class Question_model extends CI_Model {
 		return $ans->is_correct;
 	}
 
-	function insertQuestion($data, $options)
+	function insertLanguages($options)
 	{
 		$options = array_unique($options);
+		$insertLang = [];
+		foreach ($options as $key => $value) {
+			$insertLang[] = ['language' => $value];
+		}
+		$this->db->insert_batch($this->_languages, $insertLang);
+	}
+	function insertQuestion($data, $options)
+	{
+		$options = array_unique($options);	
+		$l_res = $this->db->get($this->_languages)->result();
+		$languages = [];
+		foreach ($l_res as $language) {
+			$languages[strtolower(trim($language->language))] = $language->language_id;
+		}
 		foreach ($data as $key => $value) {
 			$this->db->insert($this->_question, ['type'=>$value['type'],'filename'=>$value['filename']]);
 			$insert_id = $this->db->insert_id();
-			$this->db->insert($this->_choices, ['text'=>$value['language'],'is_correct'=>'1','question_id'=>$insert_id]);
+			$this->db->insert($this->_choices, ['language_id'=>$languages[strtolower(trim($value['language']))],'is_correct'=>'1','question_id'=>$insert_id]);
 			$options2 = array_diff($options, [$value['language']]);
 			shuffle($options2);
 			$langs = array_chunk($options2, 3);
 			// print_r($choices[0]);
 			$choices = [];
 			foreach ($langs[0] as $k => $v) {
-				$choices[] = ['question_id' => $insert_id, 'text'	=>	$v];
+				$choices[] = ['question_id' => $insert_id, 'language_id'	=>	$languages[strtolower(trim($v))]];
 			}
 			$this->db->insert_batch($this->_choices, $choices);
 

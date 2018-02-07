@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?=isset($tite)?$tite:'Home';?></title>
+  	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	<link rel="stylesheet" href="<?=base_url('assets/css/bootstrap.min.css');?>">
 	<link rel="stylesheet" href="<?=base_url('assets/css/style.css');?>">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -31,9 +32,9 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container">
+	<main class="container">
 		<?=$body;?>
-	</div>
+	</main>
 	<script>
 		var base_url = '<?=base_url();?>';
 	</script>

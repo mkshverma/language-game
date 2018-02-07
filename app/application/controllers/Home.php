@@ -27,6 +27,7 @@ class Home extends CI_Controller {
 	{
 		$data['title'] =	'Home';
 		$this->template->load('frontend','frontend/home',$data);
+		// $this->load->view('welcome_message',$data);
 	}
 	/**
 	 * Initialize
@@ -72,7 +73,7 @@ class Home extends CI_Controller {
 
 	function next()
 	{
-			header('Content-Type:application/json');
+		header('Content-Type:application/json');
 		$this->session->question = $this->session->question + 1;
 		$this->load->model('question_model');
 		// $this->form_validation->set_rules('question_id','Question','trim|numeric|required');
@@ -103,6 +104,7 @@ class Home extends CI_Controller {
 
 	function import()
 	{
+		set_time_limit(0);
 		$handle = fopen(FCPATH.'Language.csv', 'r');
 		$line = fgetcsv($handle);echo "<pre>";
 		$options = [];
@@ -114,9 +116,8 @@ class Home extends CI_Controller {
 				'filename'	=>	str_replace('https://drive.google.com/open?id=', 'https://docs.google.com/uc?id=', $line[7]),
 				'language'	=>	$line[1]
 			];
-			
 		}
-		// print_r($questions);die;
-		$this->question_model->insertQuestion($questions, $options);
+		$this->question_model->insertLanguages( $options );
+		$this->question_model->insertQuestion( $questions, $options );
 	}
 }
